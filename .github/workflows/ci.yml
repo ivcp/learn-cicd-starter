@@ -34,5 +34,5 @@ jobs:
         with:
           go-version: "1.20"
 
-      - name: Format code
+      - name: Format the code
         run: test -z $(go fmt ./...)
