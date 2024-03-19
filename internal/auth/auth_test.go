@@ -14,7 +14,7 @@ func TestGetAPIKey(t *testing.T) {
 	}{
 		{name: "no Authorization header present", header: "", expectError: true},
 		{name: "Authorization header melformed", header: "test", expectError: true},
-		{name: "good Authorization header", header: "ApiKeytest", expectError: false},
+		{name: "good Authorization header", header: "ApiKey test", expectError: false},
 	}
 
 	for _, test := range tests {
@@ -25,7 +25,7 @@ func TestGetAPIKey(t *testing.T) {
 			}
 			_, err := GetAPIKey(headers)
 			if err != nil && !test.expectError {
-				t.Errorf("expected no err, but got %s", err)
+				t.Errorf("expected no err, but got %q", err)
 			}
 			if err == nil && test.expectError {
 				t.Errorf("expected err, but didn't get one")
@@ -33,10 +33,10 @@ func TestGetAPIKey(t *testing.T) {
 
 			if test.expectError {
 				if test.header == "" && !errors.Is(err, ErrNoAuthHeaderIncluded) {
-					t.Errorf("expected no header included error, but got: %s", err)
+					t.Errorf("expected no header included error, but got: %q", err)
 				}
 				if test.header != "" && err.Error() != "malformed authorization header" {
-					t.Errorf("expected 'malformed authorization header' error, but got: %s", err)
+					t.Errorf("expected 'malformed authorization header' error, but got: %q", err)
 				}
 			}
 		})
